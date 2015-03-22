@@ -1,24 +1,31 @@
 # -*- coding:utf8 -*-
 
-import jieba.analyse
-
+# import jieba.analyse as textrank
+import kwExtract
 
 def loadFile(filename):
 	f = open(filename, 'r')
 	article = []
 	for line in f.readlines():
 		article.append(line.decode('gbk','ignore'))
+	f.close()
 	return article
 
-def tag_extract(text, topK = 20, stop_words = None):
-	tag_filter = ['an', 'i', 'j', 'l', 'n', 'nr', 'nrfg', 'ns', 'nt', 'nz', 't', 'v', 'vd', 'vn', 'eng']
-	keyWords = jieba.analyse.extract_tags(text, withWeight=True)
-	for word in keyWords:
-		print word
-		if word[1] in tag_filter:
-			print word[0]
+
+def tag_extract(text, topK = 2, stopWords = None):
+	keyWords = kwExtract.extract_tags(text, withWeight=False)
+	return keyWords[:topK]
+
+def terminology(filename, topK = 2):
+	content = loadFile(filename)
+	term = []
+	for c in content:
+		term += tag_extract(c)
+	term = set(term)
+	return list(term)
+
 
 if __name__ == '__main__':
-	art = loadFile("example.txt")
-	for t in art:
-		tag_extract(t)
+	terms = terminology("example.txt")
+	for word in terms:
+		print word.encode('gbk','ignore')
