@@ -65,7 +65,7 @@ def set_stop_words(stop_words_path):
     for line in lines:
         STOP_WORDS.add(line)
 
-def extract_tags(sentence, topK=20, withWeight=False, span = 4):
+def extract_tags(sentence, topK=20, withWeight=False, span = 2):
     """
     Extract keywords from sentence using TF-IDF algorithm.
     Parameter:

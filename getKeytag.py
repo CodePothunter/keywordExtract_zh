@@ -15,11 +15,11 @@ def loadFile(filename):
 	return article
 
 
-def tag_extract(text, topK = 2, span = 3):
+def tag_extract(text, topK = 4, span = 2):
 	"""
 		text 为正文，string类型
 		topK 表示这一段文字最多产生topK个关键词
-		span 表示输出的关键术语至少是几个字，建议设置4个字。
+		span 表示输出的关键术语至少是几个字。
 	"""
 	
 	keyWords = kwExtract.extract_tags(text, withWeight=True, span = span)
