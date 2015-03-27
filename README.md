@@ -11,7 +11,7 @@ A Chinese key terminology extraction tool for MOOC.<br/>
 	from keywordExtract_zh import terminology
 
 	if __name__ == '__main__':
-		terms = terminology("example.txt")
+		terms = terminology("example.txt") #示例文件
 			for word in terms:
-				print word.encode('gbk','ignore')
+				print word
 ###
