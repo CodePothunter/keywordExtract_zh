@@ -65,13 +65,15 @@ def set_stop_words(stop_words_path):
     for line in lines:
         STOP_WORDS.add(line)
 
-def extract_tags(sentence, topK=20, withWeight=False, span = 2):
+def extract_tags(sentence, topK=20, withWeight=True, span = 2, threshold = 10):
     """
     Extract keywords from sentence using TF-IDF algorithm.
     Parameter:
         - topK: return how many top keywords. `None` for all possible words.
         - withWeight: if True, return a list of (word, weight);
                       if False, return a list of words.
+        - span: the minimum length of a word
+        - threshold: the minimum idf frequency of a word in idf.txt
     """
     global STOP_WORDS, idf_loader
 
@@ -80,9 +82,9 @@ def extract_tags(sentence, topK=20, withWeight=False, span = 2):
     words = pseg.cut(sentence)
     freq = {}
     for w in words:
-        if len(w.word.strip()) < span or w.word.lower() in STOP_WORDS or w.word in STOP_WORDS or w.flag not in FLAG_FILTER:
+        if len(w.word.strip()) < span or w.word.lower() in STOP_WORDS or w.word in STOP_WORDS or w.flag not in FLAG_FILTER or (idf_freq.get(w.word, -1) != -1 and idf_freq.get(w.word)<threshold):
             continue
-        freq[w.word] = freq.get(w.word, 0.0) + 1.0
+        freq[w.word] = freq.get(w.word, 0.0) + 1 #在文章中每出现一次就加1
     total = sum(freq.values())
     for k in freq:
         freq[k] *= idf_freq.get(k, median_idf) / total
