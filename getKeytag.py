@@ -3,25 +3,26 @@
 # import jieba.analyse as textrank
 import kwExtract
 
-def loadFile(filename, mode = 1):
-	"""
-		输入文件名读取文件中内容。
-	"""
-	f = open(filename, 'r')
-	if mode ==1:
-		article = []
-		for line in f.readlines():
-			article.append(line.decode('gbk','ignore'))
-	elif mode == 2:
-		article = ""
-		for line in f.readlines():
-			article+=(line.strip().decode('gbk','ignore'))
-	else:
-		print "WRONG MODE CHOOSE"
-		articl = ""
-	f.close()
-	print "Article Loading Complete..."
-	return article
+
+# def loadFile(filename, mode = 1):
+# 	"""
+# 		输入文件名读取文件中内容。
+# 	"""
+# 	f = open(filename, 'r')
+# 	if mode ==1:
+# 		article = []
+# 		for line in f.readlines():
+# 			article.append(line.decode('gbk','ignore'))
+# 	elif mode == 2:
+# 		article = ""
+# 		for line in f.readlines():
+# 			article+=(line.strip().decode('gbk','ignore'))
+# 	else:
+# 		print "WRONG MODE CHOOSE"
+# 		articl = ""
+# 	f.close()
+# 	print "Article Loading Complete..."
+# 	return article
 
 
 def tag_extract(text, withWeight=True, topK = 10, span = 2, threshold = 10):
@@ -35,12 +36,11 @@ def tag_extract(text, withWeight=True, topK = 10, span = 2, threshold = 10):
 	keyWords = kwExtract.extract_tags(text, withWeight=withWeight, span = span, threshold = threshold)
 	return keyWords[:topK]
 
-def terminology(filename, topK = 10, span = 2, threshold = 5, mode = 1):
+def terminology(content, topK = 10, span = 2, threshold = 5, mode = 1):
 	"""
 		输出不多于topK个由该文件产生的术语。
 		mode: 如果mode值为1则采用分段统计的方法；如果mode值为2则将整篇讲义合成一篇文章进行提取
 	"""
-	content = loadFile(filename, mode = mode)
 	if mode == 1:
 		term = {}
 		num = 0.0
