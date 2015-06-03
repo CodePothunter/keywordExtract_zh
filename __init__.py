@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 from getKeytag import terminology
 from summarization import summarGener
-
 def loadFile(filename, mode = 1):
 	"""
 		输入文件名读取文件中内容。
@@ -11,7 +10,7 @@ def loadFile(filename, mode = 1):
 	if mode ==1:
 		article = []
 		for line in f.readlines():
-			article.append(line.strip().decode('gbk','ignore'))
+			article.append(line.decode('gbk','ignore'))
 	elif mode == 2:
 		article = ""
 		for line in f.readlines():
@@ -28,7 +27,7 @@ def loadFile(filename, mode = 1):
 if __name__ == '__main__':
 	#example.txt是生物进化课的课程讲义。
 	#example2.txt经济学思想史讲义
-	content = loadFile("example.txt", mode = 1)
+	content = loadFile("example2.txt", mode = 1)
 	terms = terminology(content , topK = 50, span = 2, threshold = 5, mode = 1)
 	summary = summarGener(content,terms,5)
 	summary = u''.join(summary)
